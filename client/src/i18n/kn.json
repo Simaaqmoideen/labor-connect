@@ -1,0 +1,20 @@
+{
+  "app_name": "ಲೇಬರ್ ಕನೆಕ್ಟ್",
+  "nav_dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+  "nav_jobs": "ನನ್ನ ಕೆಲಸಗಳು",
+  "nav_profile": "ಪ್ರೊಫೈಲ್",
+  "nav_logout": "ಲಾಗ್ ಔಟ್",
+  "login_title": "ಮತ್ತೆ ಸ್ವಾಗತ",
+  "login_btn": "ಲಾಗಿನ್",
+  "register_title": "ಖಾತೆ ರಚಿಸಿ",
+  "register_btn": "ನೋಂದಾಯಿಸಿ",
+  "status_pending": "ಬಾಕಿ ಇದೆ",
+  "status_accepted": "ಒಪ್ಪಿಕೊಳ್ಳಲಾಗಿದೆ",
+  "status_completed": "ಪೂರ್ಣಗೊಂಡಿದೆ",
+  "status_rejected": "ತಿರಸ್ಕರಿಸಲಾಗಿದೆ",
+  "btn_accept": "ಒಪ್ಪಿಕೊಳ್ಳಿ",
+  "btn_reject": "ತಿರಸ್ಕರಿಸಿ",
+  "btn_more_info": "ಹೆಚ್ಚಿನ ಮಾಹಿತಿ",
+  "search_workers": "ಕೆಲಸಗಾರರನ್ನು ಹುಡುಕಿ",
+  "post_job": "ಕೆಲಸವನ್ನು ಪೋಸ್ಟ್ ಮಾಡಿ"
+}

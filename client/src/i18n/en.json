@@ -1,0 +1,20 @@
+{
+  "app_name": "Labor Connect",
+  "nav_dashboard": "Dashboard",
+  "nav_jobs": "My Jobs",
+  "nav_profile": "Profile",
+  "nav_logout": "Logout",
+  "login_title": "Welcome Back",
+  "login_btn": "Login",
+  "register_title": "Create Account",
+  "register_btn": "Register",
+  "status_pending": "Pending",
+  "status_accepted": "Accepted",
+  "status_completed": "Completed",
+  "status_rejected": "Rejected",
+  "btn_accept": "Accept",
+  "btn_reject": "Reject",
+  "btn_more_info": "More Info",
+  "search_workers": "Search Workers",
+  "post_job": "Post Job"
+}

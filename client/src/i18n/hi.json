@@ -1,0 +1,20 @@
+{
+  "app_name": "लेबर कनेक्ट",
+  "nav_dashboard": "डैशबोर्ड",
+  "nav_jobs": "मेरे काम",
+  "nav_profile": "प्रोफ़ाइल",
+  "nav_logout": "लॉग आउट",
+  "login_title": "वापसी पर स्वागत है",
+  "login_btn": "लॉग इन",
+  "register_title": "खाता बनाएँ",
+  "register_btn": "रजिस्टर करें",
+  "status_pending": "लंबित",
+  "status_accepted": "स्वीकृत",
+  "status_completed": "पूर्ण",
+  "status_rejected": "अस्वीकृत",
+  "btn_accept": "स्वीकार करें",
+  "btn_reject": "अस्वीकार करें",
+  "btn_more_info": "और जानकारी",
+  "search_workers": "कार्यकर्ता खोजें",
+  "post_job": "काम पोस्ट करें"
+}
