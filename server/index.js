@@ -17,6 +17,11 @@ const workerRoutes = require('./routes/worker.routes');
 const chatRoutes = require('./routes/chat.routes');
 const locationRoutes = require('./routes/location.routes');
 const jobRoutes = require('./routes/jobs.routes');
+const levelRoutes = require('./routes/level.routes');
+const verificationRoutes = require('./routes/verification.routes');
+const weatherRoutes = require('./routes/weather.routes');
+const workVerificationRoutes = require('./routes/workVerification.routes');
+const aiChatRoutes = require('./routes/aiChat.routes');
 
 const app = express();
 const server = http.createServer(app);
@@ -53,6 +58,11 @@ app.use('/api/worker', workerRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/location', locationRoutes);
 app.use('/api/jobs', jobRoutes);
+app.use('/api/level', levelRoutes);
+app.use('/api/verifications', verificationRoutes);
+app.use('/api/weather', weatherRoutes);
+app.use('/api/work-verify', workVerificationRoutes);
+app.use('/api/ai-chat', aiChatRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));

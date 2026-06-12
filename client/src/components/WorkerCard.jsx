@@ -1,11 +1,18 @@
 import React from 'react';
 import StarRating from './StarRating';
 import { FaCheckCircle, FaMapMarkerAlt, FaBriefcase } from 'react-icons/fa';
+import LevelBadge from './advanced/LevelBadge';
+import VerificationBadge from './advanced/VerificationBadge';
 
 const WorkerCard = ({ worker, onSendJob, onSelect, showContact }) => {
-  const { name, category, skills, rating_avg, rating_count, availability, is_verified, photo_url, wage_per_day, experience_yrs, distance, phone } = worker;
+  const { name, category, skills, rating_avg, rating_count, availability, is_verified, photo_url, wage_per_day, experience_yrs, distance, phone, level, verification_badges } = worker;
 
-  const skillsList = typeof skills === 'string' ? JSON.parse(skills) : (skills || []);
+  let skillsList = [];
+  try {
+    skillsList = typeof skills === 'string' ? JSON.parse(skills) : (skills || []);
+  } catch (e) {
+    skillsList = typeof skills === 'string' ? skills.split(',').map(s => s.trim()) : [];
+  }
 
   return (
     <div className="card" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -27,9 +34,12 @@ const WorkerCard = ({ worker, onSendJob, onSelect, showContact }) => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <h3 style={{ margin: '0 0 4px', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
               {name}
-              {is_verified && <FaCheckCircle color="var(--accent-blue)" size={14} title="Verified" />}
+              {is_verified && <FaCheckCircle color="var(--accent-green)" size={14} title="Verified" />}
             </h3>
             <span className={`badge badge-${availability}`}>{availability}</span>
+          </div>
+          <div style={{ marginBottom: '8px' }}>
+            <LevelBadge level={level} />
           </div>
           <p style={{ margin: '0 0 8px', color: 'var(--text-secondary)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
             <FaBriefcase size={12} /> {category} • {experience_yrs} yrs exp
@@ -48,6 +58,14 @@ const WorkerCard = ({ worker, onSendJob, onSelect, showContact }) => {
           <span style={{ padding: '2px 8px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>+{skillsList.length - 3}</span>
         )}
       </div>
+
+      {(verification_badges && verification_badges.length > 0) && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '4px' }}>
+          {verification_badges.map((badge, i) => (
+            <VerificationBadge key={i} label={badge} />
+          ))}
+        </div>
+      )}
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '12px', borderTop: '1px solid var(--border-color)' }}>
         <div>

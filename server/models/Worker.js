@@ -20,7 +20,15 @@ const Worker = sequelize.define('Worker', {
   rating_avg: { type: DataTypes.DECIMAL(3, 2), defaultValue: 0 },
   rating_count: { type: DataTypes.INTEGER, defaultValue: 0 },
   lat: { type: DataTypes.DECIMAL(10, 8) },
-  lng: { type: DataTypes.DECIMAL(11, 8) }
+  lng: { type: DataTypes.DECIMAL(11, 8) },
+  // Level System fields
+  level: { type: DataTypes.ENUM('bronze', 'silver', 'gold', 'platinum'), defaultValue: 'bronze' },
+  level_points: { type: DataTypes.INTEGER, defaultValue: 0 },
+  jobs_completed: { type: DataTypes.INTEGER, defaultValue: 0 },
+  reliability_score: { type: DataTypes.DECIMAL(5, 2), defaultValue: 100.00 },
+  attendance_score: { type: DataTypes.DECIMAL(5, 2), defaultValue: 100.00 },
+  acceptance_rate: { type: DataTypes.DECIMAL(5, 2), defaultValue: 100.00 },
+  verification_badges: { type: DataTypes.JSON, defaultValue: null }
 }, { tableName: 'workers', underscored: true });
 
 module.exports = Worker;

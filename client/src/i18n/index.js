@@ -3,6 +3,9 @@ import { initReactI18next } from 'react-i18next';
 import enTranslations from './en.json';
 import knTranslations from './kn.json';
 import hiTranslations from './hi.json';
+import taTranslations from './ta.json';
+import teTranslations from './te.json';
+import mlTranslations from './ml.json';
 
 i18n
   .use(initReactI18next)
@@ -10,7 +13,10 @@ i18n
     resources: {
       en: { translation: enTranslations },
       kn: { translation: knTranslations },
-      hi: { translation: hiTranslations }
+      hi: { translation: hiTranslations },
+      ta: { translation: taTranslations },
+      te: { translation: teTranslations },
+      ml: { translation: mlTranslations }
     },
     lng: localStorage.getItem('language') || 'en',
     fallbackLng: 'en',

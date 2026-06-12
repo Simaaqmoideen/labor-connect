@@ -6,8 +6,12 @@ import MapView from '../../components/MapView';
 import useGeolocation from '../../hooks/useGeolocation';
 import StatusBadge from '../../components/StatusBadge';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import LevelBadge from '../../components/advanced/LevelBadge';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const WorkerDashboard = () => {
+  const { t } = useTranslation();
   const { user } = useContext(AuthContext);
   const [profile, setProfile] = useState(null);
   const [earnings, setEarnings] = useState({ total_earnings: 0, pending_jobs: 0 });
@@ -79,10 +83,13 @@ const WorkerDashboard = () => {
               {user?.name?.charAt(0)}
             </div>
             <h3>{user?.name}</h3>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '15px' }}>{profile?.category}</p>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '10px' }}>{profile?.category}</p>
+            <div style={{ marginBottom: '15px' }}>
+              <LevelBadge level={profile?.level} />
+            </div>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', background: 'var(--bg-secondary)', borderRadius: 'var(--radius-sm)' }}>
-              <span>Status</span>
+              <span>{t('status')}</span>
               <StatusBadge status={profile?.availability} />
             </div>
             
@@ -91,29 +98,43 @@ const WorkerDashboard = () => {
               style={{ width: '100%', marginTop: '15px' }}
               onClick={toggleAvailability}
             >
-              {profile?.availability === 'available' ? 'Go Offline' : 'Go Online'}
+              {profile?.availability === 'available' ? t('go_offline') : t('go_online')}
             </button>
           </div>
 
           <div className="card">
-            <h4 style={{ marginBottom: '15px' }}>Quick Stats</h4>
+            <h4 style={{ marginBottom: '15px' }}>{t('quick_stats')}</h4>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Total Earnings</span>
+              <span style={{ color: 'var(--text-secondary)' }}>{t('total_earnings')}</span>
               <span style={{ fontWeight: 'bold' }}>₹{earnings.total_earnings || 0}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Pending Jobs</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>{t('pending_jobs')}</span>
               <span style={{ fontWeight: 'bold' }}>{earnings.pending_jobs || 0}</span>
             </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>{t('level_points')}</span>
+              <span style={{ fontWeight: 'bold' }}>{profile?.level_points || 0}</span>
+            </div>
+          </div>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 style={{ marginBottom: '15px' }}>{t('advanced_tools')}</h4>
+            <Link to="/worker/accommodations" className="btn btn-secondary" style={{ display: 'block', textAlign: 'center', marginBottom: '10px' }}>
+              {t('find_accommodations')}
+            </Link>
+            <Link to="/worker/level" className="btn btn-secondary" style={{ display: 'block', textAlign: 'center' }}>
+              {t('career_progress')}
+            </Link>
           </div>
         </div>
 
         {/* Main Content */}
         <div>
-          <h2 style={{ marginBottom: '20px' }}>Incoming Job Requests</h2>
+          <h2 style={{ marginBottom: '20px' }}>{t('incoming_requests')}</h2>
           {incomingJobs.length === 0 ? (
             <div className="card" style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
-              No new job requests at the moment.
+              {t('no_new_requests')}
             </div>
           ) : (
             <div style={{ display: 'grid', gap: '15px' }}>
@@ -125,9 +146,9 @@ const WorkerDashboard = () => {
                       {job.description}
                     </p>
                     <div style={{ display: 'flex', gap: '15px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                      <span>Provider: {job.JobProvider?.name || 'Unknown'}</span>
-                      <span>Offered: ₹{job.expected_wage || 'N/A'}</span>
-                      {job.scheduled_at && <span>Required: {new Date(job.scheduled_at).toLocaleDateString()}</span>}
+                      <span>{t('provider_label')} {job.JobProvider?.name || 'Unknown'}</span>
+                      <span>{t('offered_wage')} ₹{job.expected_wage || 'N/A'}</span>
+                      {job.scheduled_at && <span>{t('required_date')} {new Date(job.scheduled_at).toLocaleDateString()}</span>}
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: '10px' }}>
@@ -141,7 +162,7 @@ const WorkerDashboard = () => {
 
           {lat && lng && (
             <div style={{ marginTop: '20px' }}>
-              <h3 style={{ marginBottom: '15px' }}>Job Providers Near You</h3>
+              <h3 style={{ marginBottom: '15px' }}>{t('providers_near_you')}</h3>
               <MapView 
                 center={[lat, lng]} 
                 showUserLocation 

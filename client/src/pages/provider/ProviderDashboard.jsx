@@ -5,8 +5,10 @@ import MapView from '../../components/MapView';
 import useGeolocation from '../../hooks/useGeolocation';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 const ProviderDashboard = () => {
+  const { t } = useTranslation();
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useState({ category: '', maxDistance: 10 });
@@ -53,16 +55,21 @@ const ProviderDashboard = () => {
     <div className="container" style={{ padding: '20px 0' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '20px' }}>
         <div>
-          <h1 style={{ margin: '0 0 10px' }}>Find Workers</h1>
-          <p style={{ color: 'var(--text-secondary)', margin: 0 }}>Discover skilled labor near your location</p>
+          <h1 style={{ margin: '0 0 10px' }}>{t('find_workers')}</h1>
+          <p style={{ color: 'var(--text-secondary)', margin: 0 }}>{t('discover_skilled_labor')}</p>
+        </div>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <a href="/provider/weather" className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+            <span>⛅</span> {t('check_weather')}
+          </a>
         </div>
       </div>
 
       <div className="card" style={{ padding: '15px', marginBottom: '20px', display: 'flex', gap: '15px', alignItems: 'flex-end' }}>
         <div className="form-group" style={{ flex: 1, margin: 0 }}>
-          <label className="form-label">Category</label>
+          <label className="form-label">{t('category')}</label>
           <select className="form-select" value={searchParams.category} onChange={e => setSearchParams({...searchParams, category: e.target.value})}>
-            <option value="">All Categories</option>
+            <option value="">{t('all_categories')}</option>
             <option value="Electrician">Electrician</option>
             <option value="Plumber">Plumber</option>
             <option value="Carpenter">Carpenter</option>
@@ -72,10 +79,10 @@ const ProviderDashboard = () => {
           </select>
         </div>
         <div className="form-group" style={{ flex: 1, margin: 0 }}>
-          <label className="form-label">Max Distance (km)</label>
+          <label className="form-label">{t('max_distance')}</label>
           <input type="number" className="form-input" value={searchParams.maxDistance} onChange={e => setSearchParams({...searchParams, maxDistance: e.target.value})} />
         </div>
-        <button className="btn btn-primary" onClick={fetchWorkers}>Search</button>
+        <button className="btn btn-primary" onClick={fetchWorkers}>{t('search')}</button>
       </div>
 
       {lat && lng && (
@@ -88,7 +95,7 @@ const ProviderDashboard = () => {
         <LoadingSpinner />
       ) : workers.length === 0 ? (
         <div className="card" style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
-          No workers found in your area. Try increasing the search distance or changing the category.
+          {t('no_workers_found')}
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>

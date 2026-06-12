@@ -36,8 +36,26 @@ const Navbar = () => {
         {isAuthenticated && (
           <>
             <Link to={`/${role}/dashboard`} style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_dashboard')}</Link>
-            {role === 'provider' && <Link to="/provider/jobs" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_jobs')}</Link>}
-            {role === 'worker' && <Link to="/worker/jobs" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_jobs')}</Link>}
+            {role === 'provider' && (
+              <>
+                <Link to="/provider/jobs" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_jobs')}</Link>
+                <Link to="/provider/weather" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_weather')}</Link>
+              </>
+            )}
+            {role === 'worker' && (
+              <>
+                <Link to="/worker/jobs" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_jobs')}</Link>
+                <Link to="/worker/level" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_level')}</Link>
+              </>
+            )}
+            {role === 'admin' && (
+              <>
+                <Link to="/admin/verifications" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_verifications')}</Link>
+                <Link to="/admin/predictive-demand" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_predictive_demand', 'Demand Analytics')}</Link>
+                <Link to="/admin/worker-trust" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_worker_trust', 'Trust Index')}</Link>
+                <Link to="/admin/revenue-impact" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{t('nav_revenue_impact', 'Revenue & Impact')}</Link>
+              </>
+            )}
           </>
         )}
 

@@ -9,6 +9,7 @@ import {
 import { Pie } from 'react-chartjs-2';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import MapView from '../../components/MapView';
+import { useTranslation } from 'react-i18next';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
 
@@ -32,6 +33,7 @@ const StatCard = ({ label, value, icon, color }) => (
 );
 
 const AdminDashboard = () => {
+  const { t } = useTranslation();
   const [analytics, setAnalytics] = useState(null);
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -57,10 +59,10 @@ const AdminDashboard = () => {
   if (loading) return <LoadingSpinner fullScreen />;
   if (!analytics) return <div>Failed to load data</div>;
 
-  const { total_workers, active_workers, total_providers, total_jobs, jobs_by_status, avg_rating } = analytics;
+  const { total_workers, active_workers, total_providers, total_jobs, jobs_by_status, avg_rating, pending_verifications } = analytics;
 
   const pieData = {
-    labels: ['Completed', 'Pending', 'Accepted', 'Rejected'],
+    labels: [t('job_completed'), t('job_pending'), t('job_accepted'), t('job_rejected')],
     datasets: [{
       data: [
         jobs_by_status?.completed || 0,
@@ -92,17 +94,20 @@ const AdminDashboard = () => {
   return (
     <div className="container" style={{ padding: '24px 0' }}>
       <div style={{ marginBottom: '24px' }}>
-        <h1 style={{ margin: '0 0 4px' }}>Admin Dashboard</h1>
-        <p style={{ margin: 0, color: 'var(--text-secondary)' }}>Platform overview and live provider map</p>
+        <h1 style={{ margin: '0 0 4px' }}>{t('admin_dashboard')}</h1>
+        <p style={{ margin: 0, color: 'var(--text-secondary)' }}>{t('admin_dashboard_desc')}</p>
       </div>
 
       {/* Stat Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '28px' }}>
-        <StatCard label="Total Workers"    value={total_workers}   icon="👷" color="rgba(59,130,246,0.15)" />
-        <StatCard label="Active Workers"   value={active_workers}  icon="✅" color="rgba(16,185,129,0.15)" />
-        <StatCard label="Total Providers"  value={total_providers} icon="🏢" color="rgba(139,92,246,0.15)" />
-        <StatCard label="Total Jobs"       value={total_jobs}      icon="📋" color="rgba(245,158,11,0.15)" />
-        <StatCard label="Avg Worker Rating" value={`${avg_rating} ⭐`} icon="🌟" color="rgba(239,68,68,0.15)" />
+        <StatCard label={t('total_workers')}    value={total_workers}   icon="👷" color="rgba(59,130,246,0.15)" />
+        <StatCard label={t('active_workers')}   value={active_workers}  icon="✅" color="rgba(16,185,129,0.15)" />
+        <StatCard label={t('total_providers')}  value={total_providers} icon="🏢" color="rgba(139,92,246,0.15)" />
+        <StatCard label={t('total_jobs')}       value={total_jobs}      icon="📋" color="rgba(245,158,11,0.15)" />
+        <StatCard label={t('avg_rating')}       value={`${avg_rating} ⭐`} icon="🌟" color="rgba(239,68,68,0.15)" />
+        <a href="/admin/verifications" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <StatCard label={t('pending_verifications')} value={pending_verifications || 0} icon="🛡️" color="rgba(59,130,246,0.15)" />
+        </a>
       </div>
 
       {/* Map + Chart row */}
@@ -112,9 +117,9 @@ const AdminDashboard = () => {
         <div className="card" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
             <div>
-              <h3 style={{ margin: 0 }}>📍 Job Provider Locations</h3>
+              <h3 style={{ margin: 0 }}>📍 {t('job_provider_locations')}</h3>
               <p style={{ margin: '4px 0 0', fontSize: '0.83rem', color: 'var(--text-secondary)' }}>
-                {providerMarkers.length} provider{providerMarkers.length !== 1 ? 's' : ''} visible on map
+                {providerMarkers.length} {providerMarkers.length !== 1 ? t('provider_plural') : t('provider_singular')} {t('visible_on_map')}
               </p>
             </div>
             <div style={{
@@ -124,7 +129,7 @@ const AdminDashboard = () => {
               borderRadius: '20px'
             }}>
               <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#8B5CF6', display: 'inline-block' }} />
-              Provider
+              {t('provider_legend')}
             </div>
           </div>
 
@@ -136,8 +141,8 @@ const AdminDashboard = () => {
               color: 'var(--text-muted)', gap: '12px'
             }}>
               <span style={{ fontSize: '3rem' }}>🗺️</span>
-              <p style={{ margin: 0, fontWeight: 500 }}>No provider locations yet</p>
-              <p style={{ margin: 0, fontSize: '0.82rem' }}>Providers appear here when they log in and share their GPS</p>
+              <p style={{ margin: 0, fontWeight: 500 }}>{t('no_provider_locations')}</p>
+              <p style={{ margin: 0, fontSize: '0.82rem' }}>{t('providers_appear_here')}</p>
             </div>
           ) : (
             <MapView
@@ -151,7 +156,7 @@ const AdminDashboard = () => {
 
         {/* Job Status Pie */}
         <div className="card" style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 16px' }}>Job Status</h3>
+          <h3 style={{ margin: '0 0 16px' }}>{t('job_status')}</h3>
           <div style={{ height: '220px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Pie
               data={pieData}
@@ -167,10 +172,10 @@ const AdminDashboard = () => {
           {/* Quick stats below chart */}
           <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             {[
-              { label: 'Completed', val: jobs_by_status?.completed || 0, color: '#10B981' },
-              { label: 'Pending',   val: jobs_by_status?.pending   || 0, color: '#F59E0B' },
-              { label: 'Accepted',  val: jobs_by_status?.accepted  || 0, color: '#3B82F6' },
-              { label: 'Rejected',  val: jobs_by_status?.rejected  || 0, color: '#EF4444' },
+              { label: t('job_completed'), val: jobs_by_status?.completed || 0, color: '#10B981' },
+              { label: t('job_pending'),   val: jobs_by_status?.pending   || 0, color: '#F59E0B' },
+              { label: t('job_accepted'),  val: jobs_by_status?.accepted  || 0, color: '#3B82F6' },
+              { label: t('job_rejected'),  val: jobs_by_status?.rejected  || 0, color: '#EF4444' },
             ].map(item => (
               <div key={item.label} style={{
                 background: 'var(--bg-secondary)', borderRadius: 'var(--radius)',
@@ -187,7 +192,7 @@ const AdminDashboard = () => {
       {/* Provider list below map */}
       {providers.length > 0 && (
         <div className="card" style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 16px' }}>Registered Providers on Map</h3>
+          <h3 style={{ margin: '0 0 16px' }}>{t('registered_providers_map')}</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '12px' }}>
             {providers.map(p => (
               <div key={p.id} style={{
@@ -208,7 +213,7 @@ const AdminDashboard = () => {
                     {p.name}
                   </p>
                   <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {p.company_name || p.address || 'No details'}
+                    {p.company_name || p.address || t('no_details')}
                   </p>
                   <p style={{ margin: '2px 0 0', fontSize: '0.72rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>
                     {parseFloat(p.lat).toFixed(4)}, {parseFloat(p.lng).toFixed(4)}
@@ -216,7 +221,7 @@ const AdminDashboard = () => {
                 </div>
                 {p.is_verified && (
                   <span style={{ marginLeft: 'auto', fontSize: '0.75rem', background: 'rgba(16,185,129,0.15)', color: '#10B981', padding: '2px 8px', borderRadius: '20px', flexShrink: 0 }}>
-                    ✓ Verified
+                    ✓ {t('verified_badge')}
                   </span>
                 )}
               </div>

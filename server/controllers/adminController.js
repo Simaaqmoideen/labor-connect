@@ -1,4 +1,4 @@
-const { Worker, JobProvider, JobRequest, Rating } = require('../models');
+const { Worker, JobProvider, JobRequest, Rating, WorkerVerification } = require('../models');
 const { paginate } = require('../utils/helpers');
 const { Op } = require('sequelize');
 
@@ -10,6 +10,9 @@ const getAnalytics = async (req, res) => {
     const totalJobs = await JobRequest.count();
     const completedJobs = await JobRequest.count({ where: { status: 'completed' } });
     const pendingJobs = await JobRequest.count({ where: { status: 'pending' } });
+    
+    // Advanced feature analytics
+    const pendingVerifications = await WorkerVerification.count({ where: { status: 'pending' } });
     
     // Avg rating calculation could be complex, simplifying for demo
     const avgRatingResult = await Worker.aggregate('rating_avg', 'avg');
@@ -29,7 +32,8 @@ const getAnalytics = async (req, res) => {
         accepted: acceptedJobs,
         rejected: rejectedJobs
       },
-      avg_rating: avgRating
+      avg_rating: avgRating,
+      pending_verifications: pendingVerifications
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
