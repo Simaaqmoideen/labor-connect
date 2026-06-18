@@ -43,7 +43,7 @@ const AIAssistant = ({ isOpen, onClose }) => {
   };
 
   const handleSend = async (text) => {
-    const msg = text || input;
+    const msg = typeof text === 'string' ? text : input;
     if (!msg.trim()) return;
 
     setMessages(prev => [...prev, { id: Date.now().toString(), text: msg, isBot: false }]);

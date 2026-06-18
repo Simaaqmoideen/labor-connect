@@ -65,12 +65,12 @@ const COMMANDS = {
   available_workers: /(?:show|list|get)\s*(?:available|free|online)\s*worker/i,
   estimate_cost: /(?:estimate|calculate|how much)\s*(?:project\s*)?(?:cost|price|budget)/i,
   find_jobs: /(?:find|search|show|get)\s*(?:nearby\s*)?(?:job|work)\s*(?:near\s*me)?/i,
-  show_earnings: /(?:show|my|get|view)\s*(?:earning|income|salary|payment)/i,
-  upcoming_work: /(?:show|my|get|view)\s*(?:upcoming|next|scheduled|pending)\s*(?:work|job)/i,
-  check_level: /(?:show|my|get|check|view)\s*(?:level|rank|status|progress)/i,
-  show_ratings: /(?:show|my|get|view)\s*(?:rating|review|feedback)/i,
+  show_earnings: /(?:show|my|get|view)\s*(?:my\s*)?(?:earning|income|salary|payment)/i,
+  upcoming_work: /(?:show|my|get|view)\s*(?:my\s*)?(?:upcoming|next|scheduled|pending)\s*(?:work|job)/i,
+  check_level: /(?:show|my|get|check|view)\s*(?:my\s*)?(?:level|rank|status|progress)/i,
+  show_ratings: /(?:show|my|get|view)\s*(?:my\s*)?(?:rating|review|feedback)/i,
   help: /(?:help|commands|what can you do|how to use|guide|menu)/i,
-  greeting: /(?:^hi$|^hello$|^hey$|^namaste$|^vanakkam$|^namaskara$)/i
+  greeting: /(?:hi|hello|hey|namaste|vanakkam|namaskara)/i
 };
 
 function extractCategory(msg) {
